@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from apps.dispositivos.models import Dispositivo
 from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
 from django.core.urlresolvers import reverse_lazy, reverse
@@ -7,6 +7,7 @@ from apps.dispositivos.forms import DispositivoForm
 from apps.personas.forms import UsuarioForm
 from apps.personas.models import Usuario
 from django.core import serializers
+from django.forms.models import model_to_dict
 
 
 # Create your views here.
@@ -44,14 +45,18 @@ class DispositivosList(ListView):
     #   return kwargs
 import json
 def mostrarUser(request):
-	usuario=request.POST.get('user')  #diccionario
-	usuarios=Usuario.objects.filter(usuario=usuario)
+
+	usuario=request.GET.get('user')  #diccionario
+	usuario_asignado=Usuario.objects.filter(usuario=usuario)
+	data=serializers.serialize('json', usuario_asignado, fields=('departamento','email'))
 	#usuarios=[usuario_serializer(usuario) for usuario in usuarios]
 	#return HttpResponse(json.dumps(usuarios), content_type="application/json")
-	return usuarios
+	#print (type(usuario_asignado))
+	#print (type(model_to_dict(usuario_asignado)))
+	return HttpResponse(data, content_type="application/json")
 
-def usuario_serializer(usuario):
-	return {'usuario': usuario.usuario, 'departamento': usuario.departamento}
+#def usuario_serializer(usuario):
+#	return {'usuario': usuario.usuario, 'departamento': usuario.departamento}
 
 
 
@@ -72,7 +77,7 @@ def add_dispositivo(request):
 			user='almacen11'
 			user_almacen=Usuario.objects.filter(usuario=user)
 			if user_almacen != 'almacen11':
-				u=Usuario(usuario='almacen11',departamento='Informatica', email='Informatica@apvigo.es', fuera_convenio='false')
+				u=Usuario(usuario='almacen11',departamento='Informatica', email='Informatica@apvigo.es', fuera_convenio='False')
 				u.save()
 				dispo=Dispositivo(request.POST.get('tipo_dispositivo'),
 					request.POST.get('marca'),
