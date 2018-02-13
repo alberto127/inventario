@@ -1,0 +1,39 @@
+<!--YOUTUBE     
+Tutorial N° 15 Django 1.5: Ajax-->
+{% extends 'base/base.html' %}
+
+{% block content %}
+		<select>
+				<option>Elige un tipo de dispositivo</option>
+				{% for dispositivo in dispositivos %}
+					<option value="{{dispositivo.dispositivo}}">{{ dispositivo.dispositivo }}</option>
+				{% endfor %}
+
+<div id="datos">
+
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script>
+	$('select').on('change', inicio);
+
+	function inicio(){
+		var dispositivo = $(this).val();
+		$.ajax({
+			data: {'dispos' : dispositivo},
+			url: '/dispositivos/busqueda_ajax/',
+			type: 'get',
+			success: function(data){
+				var html="";
+				for(var i=0;i<data.length ; i++){
+					html+='<ul><li>'+data[i].fields.dispositivo+'</li><li>' +data[i].fields.marca+'</li></ul>';
+				}
+				$('#datos').html(html);
+			}
+		});
+	}
+</script>
+
+{% endblock %}

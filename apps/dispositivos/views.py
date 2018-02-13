@@ -62,7 +62,7 @@ def mostrarUser(request):
 
 
 
-def add_dispositivo(request):
+def dispositivo_nuevo(request):
 	if request.method=='POST':
 		dispo=DispositivoForm(request.POST)
 

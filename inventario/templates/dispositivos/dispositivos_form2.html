@@ -1,0 +1,87 @@
+
+
+
+{% extends 'base/base.html' %}
+
+{% block content %}
+<form method="post"  id="form">
+	{% csrf_token %}
+
+		<div class="col-md-3 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form.dispositivo.name}}">{{form.dispositivo.label}}</label>
+				{{form.dispositivo}}
+			</div>
+		</div>
+		<div class="col-md-3 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form.num_serie.name}}">{{form.num_serie.label}}</label>
+				{{form.num_serie}}
+			</div>
+		</div>
+		<div class="col-md-3 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form.marca.name}}">{{form.marca.label}}</label>
+				{{form.marca}}
+			</div>
+		</div>
+		<div class="col-md-3 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form.modelo.name}}">{{form.modelo.label}}</label>
+				{{form.modelo}}
+			</div>
+		</div>
+			<div class="col-md-3 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form.fecha_instalacion.name}}">{{form.fecha_instalacion.label}}</label>
+				{{form.fecha_instalacion}}
+			</div>
+		</div>
+			<div class="col-md-3 col-md-offset-2">
+			<div class="form-group">
+				<button class="btn btn-primary" type="submit">Guardar</button>
+			</div>
+		</div>
+			<div class="col-md-3 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form.usuario.name}}">{{form.usuario.label}}</label>
+				{{form.usuario}} <button id="usuario_nuevo">Añadir usuario</button>	
+			</div>
+		</div>
+</form>
+<form method="post" id="form2" style="display:none">
+	
+		<div class="col-md-3 col-md-offset-2" >
+			<div class="form-group">
+			<label for="{{form2.nombre_apellido.name}}">{{form2.nombre_apellido.label}}</label>
+			{{form2.nombre_apellido}}
+		</div>
+		</div>
+		<div class="col-md-3 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form2.departamento.name}}">{{form2.departamento.label}}</label>
+				{{form2.departamento}}
+			</div>
+		</div>
+		<div class="col-md-3 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form2.email.name}}">{{form2.email.label}}</label>
+				{{form2.email}}
+			</div>
+		</div>
+		<div class="col-md-3 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form2.fuera_convenio.name}}">{{form2.fuera_convenio.label}}</label>
+				{{form2.fuera_convenio}}
+			</div>
+		</div>
+	<div class="col-md-3 col-md-offset-2">
+			<div class="form-group">
+				<button class="btn btn-primary" type="submit">Guardar</button>
+			</div>
+		</div>
+</form>
+<script src="../../static/js/form_user.js"></script>
+{% endblock %}
+
+

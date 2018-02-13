@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>#</td>
+			<td>Dispositivo</td>
+			<td>Marca</td>
+			<td>Modelo</td>
+			<td>S/N</td>
+			<td>Fecha Instalación</td>
+			<td>Usuario</td>
+			<td>Acciones</td>
+		</tr>
+
+	</thead>
+	<tbody>
+		<!--<tr>
+			<select>
+				<option>Elige un tipo de dispositivo</option>
+				{% for dispositivo in dispositivos %}
+					<option value="{{dispositivo.dispositivo}}">{{ dispositivo.dispositivo }}</option>
+				{% endfor %}
+		</tr>-->
+		{% if object_list %}
+		{% for Dispositivo in object_list %}
+		<tr>
+			<td>{{ forloop.counter }}</td>
+			<td>{{ Dispositivo.dispositivo }}</td>
+			<td>{{ Dispositivo.marca }} </td>
+			<td>{{ Dispositivo.modelo }}</td>
+			<td>{{ Dispositivo.num_serie }}</td>
+			<td>{{ Dispositivo.fecha_instalacion }}</td>
+			<td>{{ Dispositivo.usuario }}</td>
+			<td>
+				<a class="btn btn-primary" href="#">Editar</a>
+				<a class="btn btn-danger" href="#">Eliminar</a>
+				<a class="btn btn-primary" href="{% url 'dispositivos:dispositivo_nuevo' %}">Añadir</a>
+			</td>
+		</tr>
+		{% endfor %}
+
+		{% else %}
+		<h1>No hay dispositivos</h1>
+		{% endif %}
+	</tbody>
+</table>
+
+
+{% endblock %}

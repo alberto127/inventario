@@ -1,0 +1,86 @@
+
+{% extends 'base/base.html' %}
+
+{% block content %}
+<form method="POST" action="{% url 'dispositivos:dispositivo_nuevo' %}">
+  {% csrf_token %}
+<div class="row"> 
+    <div class="form-group col-md-4" >
+        <label for="DispositivoForm-dispositivo">Tipo de Dispositivo</label>
+        <input type="text" required class="form-control" id="tipo_dispositivo" name="tipo_dispositivo" value="{{DispositivoForm.dispositivo.value}}" >
+    </div> 
+
+        <div class="form-group col-md-4" >
+        <label for="DispositivoForm-marca">Marca</label>
+        <input type="text" required class="form-control" id="marca" name="marca" value="{{DispositivoForm.marca.value}}" >
+    </div> 
+
+    <div class="form-group col-md-4" >
+        <label for="DispositivoForm-modelo">Modelo</label>
+        <input type="text" required class="form-control" id="modelo" name="modelo" value="{{DispositivoForm.modelo.value}}" >
+    </div>
+
+    <div class="form-group col-md-4" >
+        <label for="DispositivoForm-num_serie">Nº de serie</label>
+        <input type="text" required class="form-control" id="num_serie" name="num_serie" value="{{DispositivoForm.num_serie.value}}" >
+    </div> 
+
+    <div class="form-group col-md-4" >
+        <label for="DispositivoForm-fecha_instalacion">Fecha de instalación</label>
+        <input type="date" required class="form-control" id="fecha_instalacion" name="fecha_instalacion" value="{{DispositivoForm.fecha_instalacion.value}}" >
+    </div> 
+    <select name="asignar_usuario" id="asignar_usuario">
+    <option selected value="Almacen">Escoge usuario</option>
+        {% for Usuario in usuario %}
+    <option value="{{ Usuario.usuario }}">{{ Usuario.usuario }}</option>
+        {% endfor %}
+    </select>
+   <!--<span><i class="fa fa-plus"></i></span>-->
+</div>
+
+  <div class="form-actions right">
+        <button id='formSubmit' type="submit" class="btn red-sunglo  outline">Añadir</button>
+  </div>
+
+
+<!--<script>
+    $('select').on('change', inicio);
+
+    function inicio(){
+        var dispositivo = $(this).val();
+        $.ajax({
+            data: {'dispos' : dispositivo},
+            url: '/dispositivos/busqueda_ajax/',
+            type: 'get',
+            success: function(data){
+                var html="";
+                for(var i=0;i<data.length ; i++){
+                    html+='<ul><li>'+data[i].fields.dispositivo+'</li><li>' +data[i].fields.marca+'</li></ul>';
+                }
+                $('#datos').html(html);
+            }
+        });
+    }
+</script>-->
+
+<!--<script>
+    $('select').on('click', inicio);
+    function inicio(){
+        $("select[name=asignar_usuario]").click(function(){
+            $('input[name=usuario]').val($(this).val());
+            user=Usuario.objects.filter(usuario="asignar_usuario");
+            $('input[name=departamento]').val(user.departamento);
+            $('input[name=email]').val(user.email);
+
+        });
+    };
+</script>-->
+</form>
+   {% include "personas/personas_form.html" %}
+
+{% endblock %}
+{% block extrajs %}
+<script src="../../static/js/dispositivos.js"></script>
+
+{% endblock %}
+

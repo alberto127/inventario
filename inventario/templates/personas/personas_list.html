@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>#</td>
+			<td>Usuario</td>
+			<td>Dpto.</td>
+			<td>email</td>
+			<td>fuera de convenio</td>
+		</tr>
+	</thead>
+	<tbody>
+	<!--<tr>
+			<select>
+				<option>Filtrar por Dpto.</option>
+				{% for usuario in usuarios %}
+					<option value="{{usuario.departamento}}">{{ usuario.departamento }}</option>
+				{% endfor %}
+		</tr>-->
+		{% if object_list %}
+		{% for Usuario in object_list %}
+		<tr>
+			<td>{{ forloop.counter }}</td>
+			<td>{{ Usuario.usuario }}</td>
+			<td>{{ Usuario.departamento }} </td>
+			<td>{{ Usuario.email }}</td>
+			<td>{{ Usuario.fuera_convenio }}</td>
+			<td>
+				<a class="btn btn-primary" href="#">Editar</a>
+				<a class="btn btn-danger" href="#">Eliminar</a>
+				<a class="btn btn-primary" href="{% url 'usuarios:usuario_nuevo' %}">Añadir</a>
+			</td>
+		</tr>
+		{% endfor %}
+
+		{% else %}
+		<h1>No hay usuarios</h1>
+		{% endif %}
+	</tbody>
+</table>
+
+{% endblock%}
