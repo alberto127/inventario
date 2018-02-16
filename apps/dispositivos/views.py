@@ -63,76 +63,87 @@ def mostrarUser(request):
 
 
 def dispositivo_nuevo(request):
+
+
 	if request.method=='POST':
-		dispo=DispositivoForm(request.POST)
+		dispositivo = request.POST.get('tipo_dispositivo', None)
+		marca = request.POST.get('marca', None)
+		modelo = request.POST.get('modelo', None)
+		num_serie = request.POST.get('num_serie', None)
+		fecha_instalacion = request.POST.get('fecha_instalacion', None)
+		usuario = request.POST.get('asignar_usuario', None)
 
-		#dispo=form.save(commit=False)
-		#if dispo.is_valid():
-		#	usuario=request.POST.get('asignar_usuario')
-		#dispo=	usuario_model=Usuario()
-		#dispo=	usuario_model.nombre_apellido=usuario
-		#dispo=	dispo.usuario=usuario_model
-
-		if request.POST.get('asignar_usuario')=='sin_asignar':
-			user='almacen11'
-			user_almacen=Usuario.objects.filter(usuario=user)
-			if user_almacen != 'almacen11':
-				u=Usuario(usuario='almacen11',departamento='Informatica', email='Informatica@apvigo.es', fuera_convenio='False')
-				u.save()
-				dispo=Dispositivo(request.POST.get('tipo_dispositivo'),
-					request.POST.get('marca'),
-					request.POST.get('modelo'),
-					request.POST.get('num_serie'),
-					request.POST.get('fecha_instalacion'),
-					user)
-
-				dispo.save()
-				return HttpResponseRedirect(reverse_lazy('dispositivos:dispositivo_listar'))
-			else:
-			#return HttpResponse(user_almacen)
-				dispo=Dispositivo(request.POST.get('tipo_dispositivo'),
-					request.POST.get('marca'),
-					request.POST.get('modelo'),
-					request.POST.get('num_serie'),
-					request.POST.get('fecha_instalacion'),
-					user)
-			#dispo.save()
-			#return HttpResponseRedirect(reverse_lazy('dispositivos:dispositivo_listar'))
-		else:
-			dispo=Dispositivo(request.POST.get('tipo_dispositivo'),
-				request.POST.get('marca'),
-				request.POST.get('modelo'),
-				request.POST.get('num_serie'),
-				request.POST.get('fecha_instalacion'),
-				request.POST.get('asignar_usuario'))
-
-			dispo.save()
+		if usuario=="Almacen":
+# https://es.stackoverflow.com/questions/17426/c%C3%B3mo-puedo-saber-si-un-queryset-de-django-est%C3%A1-vac%C3%ADo/25239
+			try:
+				user = Usuario.objects.get(usuario="Almacen")
+			except Usuario.DoesNotExist:   
+				# entrará aqui cuando no exista ningun elemento que coincida con la busqueda
+				u=Usuario(usuario='Almacen',departamento='Informatica', email='informatica@apvigo.es', fuera_convenio='No')
+				u.save()			
+		
+		try:
+			dispositivo_nuevo= Dispositivo(dispositivo = dispositivo, marca = marca, modelo = modelo, num_serie = num_serie, fecha_instalacion = fecha_instalacion, usuario = usuario)
+			dispositivo_nuevo.save()
 			return HttpResponseRedirect(reverse_lazy('dispositivos:dispositivo_listar'))
-		#	dispo.dispositivo=request.POST.get('tipo_dispositivo')
-		#	dispo.marca=request.POST.get('marca')
-		#	dispo.modelo=request.POST.get('modelo')
-		#	dispo.num_serie=request.POST.get('num_serie')
-		#	dispo.fecha_instalacion=request.POST.get('fecha_instalacion')
-		#	dispo.usuario=request.POST.get('asignar_usuario')
-
-		#	dispositivo=DispositivoForm.save(commit=False)
-		#	dispositivo.dispositivo=request.tipo_dispositivo
-		#	dispositivo.num_serie=request.num_serie
-		#	dispositivo.marca=request.marca
-		#	dispositivo.modelo=request.modelo
-		#	dispositivo.fecha_instalacion=request.fecha_instalacion
-		#	dispositivo.usuario=request.asignar_usuario
-		#if dispo.is_valid():
-		#	dispo.save()
-	#	messages.success(request, ' Dispositivo añadido y asignado')
-		#	return HttpResponseRedirect(reverse_lazy('dispositivos:dispositivo_listar'))
-		#else:
-		#	return render(request, 'dispositivos/dispositivos_form.html', {'form' : form})
-		#	return HttpResponse("Error en el envio/guardado")
+			#return render(request, 'personas/personas_list.html')
+			#return HttpResponse(json.dumps({"mensaje": "Usuario guardado exitosamente."}), content_type='application/json')
+			#return HttpResponseRedirect(reverse_lazy('personas:usuario_listar'), json.dumps({"mensaje": "Usuario guardado exitosamente."}), content_type='application/json')
+		except:
+			return HttpResponseRedirect(reverse_lazy('dispositivos:dispositivo_listar'))
+			#return HttpResponse(json.dumps({"mensaje": "ERROR"}), content_type='application/json')
 	else:
 		form=DispositivoForm()
-		usuario = Usuario.objects.all()
-		return render(request, 'dispositivos/dispositivos_form.html', {'usuario' : usuario})
+		return render(request, 'dispositivos/dispositivos_form.html')
+
+
+########################################         ANTIGUO         ########################
+#	if request.method=='POST':
+#		dispo=DispositivoForm(request.POST)
+#
+#		if request.POST.get('asignar_usuario')=='sin_asignar':
+#			user='almacen11'
+#			user_almacen=Usuario.objects.filter(usuario=user)
+#			if user_almacen != 'almacen11':
+#				u=Usuario(usuario='almacen11',departamento='Informatica', email='Informatica@apvigo.es', fuera_convenio='False')
+#				u.save()
+#				dispo=Dispositivo(request.POST.get('tipo_dispositivo'),
+#					request.POST.get('marca'),
+#					request.POST.get('modelo'),
+#					request.POST.get('num_serie'),
+#					request.POST.get('fecha_instalacion'),
+#					user)
+#
+#				dispo.save()
+#				return HttpResponseRedirect(reverse_lazy('dispositivos:dispositivo_listar'))
+#			else:
+#			
+#				dispo=Dispositivo(request.POST.get('tipo_dispositivo'),
+#					request.POST.get('marca'),
+#					request.POST.get('modelo'),
+#					request.POST.get('num_serie'),
+#					request.POST.get('fecha_instalacion'),
+#					user)
+#
+#		else:
+#			dispo=Dispositivo(request.POST.get('tipo_dispositivo'),
+#				request.POST.get('marca'),
+#				request.POST.get('modelo'),
+#				request.POST.get('num_serie'),
+#				request.POST.get('fecha_instalacion'),
+#				request.POST.get('asignar_usuario'))
+#
+#			dispo.save()
+#			return HttpResponseRedirect(reverse_lazy('dispositivos:dispositivo_listar'))
+#
+#	else:
+#		form=DispositivoForm()
+#		usuario = Usuario.objects.all()
+#		return render(request, 'dispositivos/dispositivos_form.html', {'usuario' : usuario})
+
+
+
+
 
 
 #class DispositivosCreate(CreateView):

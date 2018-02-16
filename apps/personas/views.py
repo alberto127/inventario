@@ -22,11 +22,13 @@ def usuario_nuevo(request):
 		try:
 			user_nuevo= Usuario(usuario = nombre, departamento = departamento, email = email, fuera_convenio = fc)
 			user_nuevo.save()
+			return HttpResponseRedirect(reverse_lazy('usuarios:usuario_listar'))
 			#return render(request, 'personas/personas_list.html')
 			#return HttpResponse(json.dumps({"mensaje": "Usuario guardado exitosamente."}), content_type='application/json')
-			return HttpResponseRedirect(reverse_lazy('personas:usuario_listar'), json.dumps({"mensaje": "Usuario guardado exitosamente."}), content_type='application/json')
+			#return HttpResponseRedirect(reverse_lazy('personas:usuario_listar'), json.dumps({"mensaje": "Usuario guardado exitosamente."}), content_type='application/json')
 		except:
-			return HttpResponse(json.dumps({"mensaje": "ERROR"}), content_type='application/json')
+			return HttpResponseRedirect(reverse_lazy('usuarios:usuario_listar'))
+			#return HttpResponse(json.dumps({"mensaje": "ERROR"}), content_type='application/json')
 	else:
 		form=UsuarioForm()
 		return render(request, 'personas/personas_add.html')

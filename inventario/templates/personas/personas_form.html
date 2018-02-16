@@ -1,5 +1,5 @@
 {% block form_usuario %}
-<form method="post" name="add_persona" >
+<form method="post">
     <!-- action="{% url 'usuarios:usuario_nuevo' %}"-->
   {% csrf_token %}
 <div class="row"> 
@@ -21,10 +21,10 @@
     <div class="form-group col-md-4" >
         <label for="UsuarioForm-fuera_convenio">Fuera de convenio</label>
         <select name="fuera_convenio" id="fuera_convenio">
-            <option selected value="False">No</option>
-            <option value="True">Si</option>
+            <option selected value="No">No</option>
+            <option value="Si">Si</option>
         </select>
-    <button id='formSubmit' type="submit" class="btn red-sunglo  outline">Agregar</button>
+    <button id='agregar_user' class="btn red-sunglo  outline">Agregar</button>
 </form>
    <!--<script src="../../static/js/personas.js"  type="text/javascript"></script> -->
 {% endblock %}

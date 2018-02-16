@@ -2,7 +2,7 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-<form method="POST" action="{% url 'dispositivos:dispositivo_nuevo' %}">
+<form method="POST">
   {% csrf_token %}
 <div class="row"> 
     <div class="form-group col-md-4" >
@@ -39,7 +39,7 @@
 </div>
 
   <div class="form-actions right">
-        <button id='formSubmit' type="submit" class="btn red-sunglo  outline">Añadir</button>
+        <button id='btn_add_dispo' type="submit" class="btn red-sunglo  outline">Añadir</button>
   </div>
 
 

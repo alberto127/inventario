@@ -31,4 +31,25 @@ $(document).ready(function(){
         });
   });
 
+    $('#btn_add_dispo').click(function(){
+
+
+        var tipo_dispositivo = $('#tipo_dispositivo').val();
+        var marca = $('#marca').val();
+        var modelo = $('#modelo').val();
+        var num_serie = $('#num_serie').val();
+        var fecha_instalacion = $('#fecha_instalacion').val();
+        var asignar_usuario = $('#asignar_usuario').val();
+
+
+   $.ajax({
+    type: 'POST',
+    url: '/dispositivos/nuevo',
+    dataType: 'json',
+    data: { 'tipo_dispositivo': tipo_dispositivo, 'marca': marca, 'modelo': modelo, 'num_serie': num_serie, 'fecha_instalacion': fecha_instalacion, 'asignar_usuario': asignar_usuario},
+   });
+   //success: function(data){
+   //   alert(data.mensaje);
+   //   },
+   }
 });
